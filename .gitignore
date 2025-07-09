@@ -1,5 +1,4 @@
 *
-!.gitignore
 !.env.txt
 !GUI介面模組.py
 !工具模組.py
