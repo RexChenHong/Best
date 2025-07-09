@@ -1,0 +1,147 @@
+digraph TradingSystem {
+    rankdir=LR;
+    node [shape=box, style=filled, fillcolor=lightblue, fontname="Arial", fontsize=12];
+    edge [color=navy, fontname="Arial", fontsize=10];
+
+    // 分群：資料預處理
+    subgraph cluster_data_preprocessing {
+        label="資料預處理";
+        color=lightgrey;
+        "資料預處理模組" [fillcolor=lightgreen];
+        "設定檔" [fillcolor=lightyellow];
+        "工具模組" [fillcolor=lightyellow];
+        "推播通知模組" [fillcolor=lightyellow];
+    }
+
+    // 分群：模型訓練
+    subgraph cluster_training {
+        label="模型訓練";
+        color=lightgrey;
+        "信號生成模組" [fillcolor=lightgreen];
+        "訓練主控" [fillcolor=lightgreen];
+        "超參數搜尋模組" [fillcolor=lightgreen];
+        "批次切分與批次訓練" [fillcolor=lightgreen];
+        "風險優化" [fillcolor=lightgreen];
+    }
+
+    // 分群：模擬與測試網
+    subgraph cluster_simulation_testnet {
+        label="模擬與測試網";
+        color=lightgrey;
+        "模擬交易模組" [fillcolor=lightgreen];
+        "交易環境模組" [fillcolor=lightgreen];
+        "測試網模組" [fillcolor=lightgreen];
+    }
+
+    // 分群：監控與介面
+    subgraph cluster_monitoring_interface {
+        label="監控與介面";
+        color=lightgrey;
+        "GUI介面模組" [fillcolor=lightgreen];
+        "最佳參數推送模組" [fillcolor=lightgreen];
+    }
+
+    // 分群：備份與資安
+    subgraph cluster_backup_security {
+        label="備份與資安";
+        color=lightgrey;
+        "檢查點模組" [fillcolor=lightgreen];
+    }
+
+    // 分群：長期穩定性
+    subgraph cluster_long_term_stability {
+        label="長期穩定性";
+        color=lightgrey;
+        "搜尋結果查詢與繪圖分析模組" [fillcolor=lightgreen];
+        "績效分析模組" [fillcolor=lightgreen];
+    }
+
+    // 分群：獎勵計算
+    subgraph cluster_reward_calculation {
+        label="獎勵計算";
+        color=lightgrey;
+        "獎勵計算模組" [fillcolor=lightgreen];
+    }
+
+    // 分群：環境配置
+    subgraph cluster_config {
+        label="環境配置";
+        color=lightgrey;
+        ".env.txt" [fillcolor=lightyellow];
+    }
+
+    // 數據流與依賴關係
+    "資料預處理模組" -> "信號生成模組" [label="數據集"];
+    "信號生成模組" -> "訓練主控" [label="信號"];
+    "信號生成模組" -> "交易環境模組" [label="信號"];
+    "信號生成模組" -> "測試網模組" [label="信號"];
+    "訓練主控" -> "超參數搜尋模組" [label="訓練參數"];
+    "訓練主控" -> "檢查點模組" [label="模型與優化器"];
+    "超參數搜尋模組" -> "交易環境模組" [label="參數"];
+    "超參數搜尋模組" -> "獎勵計算模組" [label="交易結果"];
+    "批次切分與批次訓練" -> "交易環境模組" [label="批次數據"];
+    "批次切分與批次訓練" -> "超參數搜尋模組" [label="批次數據"];
+    "批次切分與批次訓練" -> "獎勵計算模組" [label="交易結果"];
+    "風險優化" -> "模擬交易模組" [label="風險參數"];
+    "風險優化" -> "獎勵計算模組" [label="交易結果"];
+    "模擬交易模組" -> "交易環境模組" [label="交易數據"];
+    "模擬交易模組" -> "獎勵計算模組" [label="交易結果"];
+    "交易環境模組" -> "獎勵計算模組" [label="交易結果"];
+    "交易環境模組" -> "測試網模組" [label="交易數據"];
+    "測試網模組" -> "獎勵計算模組" [label="交易結果"];
+    "獎勵計算模組" -> "檢查點模組" [label="獎勵"];
+    "檢查點模組" -> "最佳參數推送模組" [label="參數"];
+    "最佳參數推送模組" -> "交易環境模組" [label="參數"];
+    "最佳參數推送模組" -> "測試網模組" [label="參數"];
+    "最佳參數推送模組" -> "績效分析模組" [label="交易結果"];
+    "績效分析模組" -> "搜尋結果查詢與繪圖分析模組" [label="績效數據"];
+    "搜尋結果查詢與繪圖分析模組" -> "GUI介面模組" [label="報表與圖表"];
+    "GUI介面模組" -> "推播通知模組" [label="通知"];
+    "工具模組" -> "資料預處理模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "信號生成模組" [label="錯誤記錄"];
+    "工具模組" -> "訓練主控" [label="錯誤記錄"];
+    "工具模組" -> "超參數搜尋模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "模擬交易模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "交易環境模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "測試網模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "獎勵計算模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "檢查點模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "風險優化" [label="錯誤記錄"];
+    "工具模組" -> "批次切分與批次訓練" [label="錯誤記錄"];
+    "工具模組" -> "績效分析模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "最佳參數推送模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "搜尋結果查詢與繪圖分析模組" [label="錯誤記錄、硬體監控"];
+    "工具模組" -> "GUI介面模組" [label="錯誤記錄、硬體監控"];
+    "推播通知模組" -> "資料預處理模組" [label="通知"];
+    "推播通知模組" -> "信號生成模組" [label="通知"];
+    "推播通知模組" -> "訓練主控" [label="通知"];
+    "推播通知模組" -> "超參數搜尋模組" [label="通知"];
+    "推播通知模組" -> "模擬交易模組" [label="通知"];
+    "推播通知模組" -> "交易環境模組" [label="通知"];
+    "推播通知模組" -> "測試網模組" [label="通知"];
+    "推播通知模組" -> "獎勵計算模組" [label="通知"];
+    "推播通知模組" -> "檢查點模組" [label="通知"];
+    "推播通知模組" -> "風險優化" [label="通知"];
+    "推播通知模組" -> "批次切分與批次訓練" [label="通知"];
+    "推播通知模組" -> "績效分析模組" [label="通知"];
+    "推播通知模組" -> "最佳參數推送模組" [label="通知"];
+    "推播通知模組" -> "搜尋結果查詢與繪圖分析模組" [label="通知"];
+    "設定檔" -> "資料預處理模組" [label="參數"];
+    "設定檔" -> "信號生成模組" [label="參數"];
+    "設定檔" -> "訓練主控" [label="參數"];
+    "設定檔" -> "超參數搜尋模組" [label="參數"];
+    "設定檔" -> "模擬交易模組" [label="參數"];
+    "設定檔" -> "交易環境模組" [label="參數"];
+    "設定檔" -> "測試網模組" [label="參數"];
+    "設定檔" -> "獎勵計算模組" [label="參數"];
+    "設定檔" -> "檢查點模組" [label="參數"];
+    "設定檔" -> "風險優化" [label="參數"];
+    "設定檔" -> "批次切分與批次訓練" [label="參數"];
+    "設定檔" -> "績效分析模組" [label="參數"];
+    "設定檔" -> "最佳參數推送模組" [label="參數"];
+    "設定檔" -> "搜尋結果查詢與繪圖分析模組" [label="參數"];
+    "設定檔" -> "GUI介面模組" [label="參數"];
+    "設定檔" -> "推播通知模組" [label="參數"];
+    "設定檔" -> "工具模組" [label="參數"];
+    ".env.txt" -> "推播通知模組" [label="環境變數"];
+    ".env.txt" -> "測試網模組" [label="API金鑰"];
